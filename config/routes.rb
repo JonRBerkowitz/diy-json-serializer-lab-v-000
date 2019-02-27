@@ -1,9 +1,13 @@
-Rails.application.routes.draw do
-  get 'home', to: 'static#home'
-  resources :orders
-  resources :invoices
-  resources :products, only: [:index, :new, :create]
-  get '/products/:id/description', to: 'products#description'
-  get '/products/:id/inventory', to: 'products#inventory'
-  get '/products/:id/data', to: 'products#data'
+class ProductSerializer
+  def self.serialize(product)
+    serialized_product = '{'
+
+    serialized_product += '"id": ' + product.id.to_s + ', '
+    serialized_product += '"name": "' + product.name + '", '
+    serialized_product += '"description": "' + product.description + '", '
+    serialized_product += '"inventory": ' + product.inventory.to_s + ', '
+    serialized_product += '"price": "' + product.price.to_s + '"'
+
+    serialized_product += '}'
+  end
 end
